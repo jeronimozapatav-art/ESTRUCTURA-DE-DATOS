@@ -1,9 +1,11 @@
 from pathlib import Path
-p = Path("/mnt/data/Repositorio_Estructura_de_Datos_Profesional.html")
-html = p.read_text(encoding="utf-8")
 
-# Add styling for evidence gallery and source-code links
-style_insert = r'''
+path = Path("/mnt/data/Repositorio_Estructura_de_Datos_Profesional.html")
+html = path.read_text(encoding="utf-8")
+
+# Keep the existing professional page and its layout. Remove the gallery additions,
+# then add only plain evidence/source links inside the Activity 1 modal.
+gallery_css = r'''
 .evidence-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
 .evidence-card{overflow:hidden;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.025)}
 .evidence-card a{display:block}
@@ -16,11 +18,10 @@ style_insert = r'''
 .source-links a:hover{background:rgba(72,224,232,.12)}
 @media(max-width:520px){.evidence-gallery{grid-template-columns:1fr}.evidence-card img{height:190px}}
 '''
-html = html.replace('</style>', style_insert + '\n</style>', 1)
+html = html.replace(gallery_css, "")
 
-# Add evidence section area in modal after the modal-content block
-needle = '''    <div class="empty-hint">Este apartado está preparado para completar con el material real de la asignatura. Puedes editar el HTML para agregar tus contenidos.</div>'''
-replacement = '''    <div id="evidenceSection" style="display:none">
+# Remove the gallery block added to the modal
+gallery_block = '''    <div id="evidenceSection" style="display:none">
       <div class="modal-content">
         <h4>📷 Evidencias del trabajo</h4>
         <p class="note">Selecciona una imagen para verla en tamaño completo. Los archivos se cargan desde tu repositorio de GitHub.</p>
@@ -32,62 +33,55 @@ replacement = '''    <div id="evidenceSection" style="display:none">
         <div class="source-links" id="sourceLinks"></div>
       </div>
     </div>
-    <div class="empty-hint">Este apartado está preparado para completar con el material real de la asignatura. Puedes editar el HTML para agregar tus contenidos.</div>'''
-html = html.replace(needle, replacement, 1)
+'''
+html = html.replace(gallery_block, "")
 
-# Add evidence metadata to Activity 1 object
-old = """  act1:{kicker:'SEGUIMIENTO · ACTIVIDAD 01',title:'Actividad 1',description:'Documenta aquí las indicaciones y el desarrollo de la actividad 1.',items:['Enunciado e instrucciones','Procedimiento y solución','Evidencias o archivos entregables']},"""
-new = """  act1:{kicker:'SEGUIMIENTO · ACTIVIDAD 01',title:'Actividad 1',description:'Consulta las evidencias visuales, el diagrama y el código fuente del proyecto de Estructura de Datos.',items:['Diagrama del proyecto','Seis evidencias visuales del desarrollo','Archivos fuente: Estudiante.java, Curso.java y Main.java'],evidence:true},"""
-html = html.replace(old, new, 1)
+# Restore activity 1 description/items to generic activity wording; add links separately in modal via data.
+html = html.replace(
+"act1:{kicker:'SEGUIMIENTO · ACTIVIDAD 01',title:'Actividad 1',description:'Consulta las evidencias visuales, el diagrama y el código fuente del proyecto de Estructura de Datos.',items:['Diagrama del proyecto','Seis evidencias visuales del desarrollo','Archivos fuente: Estudiante.java, Curso.java y Main.java'],evidence:true},",
+"act1:{kicker:'SEGUIMIENTO · ACTIVIDAD 01',title:'Actividad 1',description:'Documenta aquí las indicaciones y el desarrollo de la actividad 1.',items:['Enunciado e instrucciones','Procedimiento y solución','Evidencias o archivos entregables']},"
+)
 
-# Add image/source data and rendering logic before function openModal
-needle_js = """function openModal(key){
- const item=content[key]; if(!item)return;"""
-replacement_js = r"""const githubRaw='https://raw.githubusercontent.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/main/';
-const evidenceFiles=[
- {name:'Diagrama del proyecto',file:'DIAGRAMA.png'},
- {name:'Evidencia 1',file:'EVIDENCIA%201.png'},
- {name:'Evidencia 2',file:'EVIDENCIA%202.png'},
- {name:'Evidencia 3',file:'EVIDENCIA%203.png'},
- {name:'Evidencia 4',file:'EVIDENCIA%204.png'},
- {name:'Evidencia 5',file:'EVIDENCIA%205.png'},
- {name:'Evidencia 6',file:'EVIDENCIA%206.png'}
-];
-const sourceFiles=[
- {name:'Estudiante.java',file:'Estudiante.java'},
- {name:'Curso.java',file:'Curso.java'},
- {name:'Main.java',file:'Main.java'}
-];
-function renderEvidence(){
- const gallery=document.getElementById('evidenceGallery');
- gallery.innerHTML='';
- evidenceFiles.forEach(item=>{
-   const card=document.createElement('div');card.className='evidence-card';
-   const link=document.createElement('a');link.href=githubRaw+item.file;link.target='_blank';link.rel='noopener noreferrer';link.title='Abrir '+item.name+' en tamaño completo';
-   const img=document.createElement('img');img.src=githubRaw+item.file;img.alt=item.name;img.loading='lazy';
-   img.onerror=()=>{img.alt=item.name+' (vista previa no disponible)';img.style.objectFit='contain';img.style.padding='20px';img.src='data:image/svg+xml;charset=UTF-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="160"><rect width="100%" height="100%" fill="#0a1220"/><text x="50%" y="48%" fill="#48e0e8" font-size="14" text-anchor="middle">Vista previa no disponible</text><text x="50%" y="66%" fill="#9aabc2" font-size="11" text-anchor="middle">Abre el archivo en GitHub</text></svg>')};
-   link.appendChild(img);card.appendChild(link);
-   const caption=document.createElement('div');caption.className='evidence-caption';
-   const label=document.createElement('strong');label.textContent=item.name;
-   const open=document.createElement('span');open.textContent='Ver ↗';
-   caption.append(label,open);card.appendChild(caption);gallery.appendChild(card);
- });
- const sources=document.getElementById('sourceLinks');sources.innerHTML='';
- sourceFiles.forEach(item=>{const a=document.createElement('a');a.href='https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/'+item.file;a.target='_blank';a.rel='noopener noreferrer';a.textContent='⌘ '+item.name+' ↗';sources.appendChild(a)});
-}
-function openModal(key){
- const item=content[key]; if(!item)return;"""
-html = html.replace(needle_js, replacement_js, 1)
+# Remove image gallery/source JavaScript, leaving the rest of the existing JavaScript untouched.
+start = html.find("const githubRaw='https://raw.githubusercontent.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/main/';")
+end = html.find("function openModal(key){", start)
+if start != -1 and end != -1:
+    html = html[:start] + html[end:]
 
-# Add show/hide evidence behavior in openModal after list rendering
-old = """ item.items.forEach(text=>{const li=document.createElement('li');li.textContent=text;list.appendChild(li)});
- backdrop.classList.add('open');document.body.style.overflow='hidden';document.getElementById('closeModal').focus();"""
-new = """ item.items.forEach(text=>{const li=document.createElement('li');li.textContent=text;list.appendChild(li)});
+html = html.replace(
+""" item.items.forEach(text=>{const li=document.createElement('li');li.textContent=text;list.appendChild(li)});
  const evidenceSection=document.getElementById('evidenceSection');
  evidenceSection.style.display=item.evidence?'block':'none';
  if(item.evidence)renderEvidence();
+ backdrop.classList.add('open');document.body.style.overflow='hidden';document.getElementById('closeModal').focus();""",
+""" item.items.forEach(text=>{const li=document.createElement('li');li.textContent=text;list.appendChild(li)});
+ const evidenceLinks=document.getElementById('activityEvidenceLinks');
+ if(evidenceLinks)evidenceLinks.style.display=key==='act1'?'block':'none';
  backdrop.classList.add('open');document.body.style.overflow='hidden';document.getElementById('closeModal').focus();"""
-html = html.replace(old, new, 1)
+)
 
-p.write_text(html, encoding="utf-8")
-print(f"Actualizado: {p}\nTamaño: {p.stat().st_size:,} bytes\nIncluye galería de 7 imágenes y enlaces a 3 archivos Java.")
+# Add a compact plain-link section in the modal. No images, no new gallery behavior.
+needle = '''    <div class="empty-hint">Este apartado está preparado para completar con el material real de la asignatura. Puedes editar el HTML para agregar tus contenidos.</div>'''
+links_block = '''    <div class="modal-content" id="activityEvidenceLinks" style="display:none">
+      <h4>Enlaces de evidencias y código</h4>
+      <ul>
+        <li><a href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/DIAGRAMA.png" target="_blank" rel="noopener noreferrer">DIAGRAMA.png</a></li>
+        <li><a href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/EVIDENCIA%201.png" target="_blank" rel="noopener noreferrer">EVIDENCIA 1.png</a></li>
+        <li><a href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/EVIDENCIA%202.png" target="_blank" rel="noopener noreferrer">EVIDENCIA 2.png</a></li>
+        <li><a href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/EVIDENCIA%203.png" target="_blank" rel="noopener noreferrer">EVIDENCIA 3.png</a></li>
+        <li><a href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/EVIDENCIA%204.png" target="_blank" rel="noopener noreferrer">EVIDENCIA 4.png</a></li>
+        <li><a href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/EVIDENCIA%205.png" target="_blank" rel="noopener noreferrer">EVIDENCIA 5.png</a></li>
+        <li><a href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/EVIDENCIA%206.png" target="_blank" rel="noopener noreferrer">EVIDENCIA 6.png</a></li>
+        <li><a href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/Estudiante.java" target="_blank" rel="noopener noreferrer">Estudiante.java</a></li>
+        <li><a href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/Main.java" target="_blank" rel="noopener noreferrer">Main.java</a></li>
+        <li><a href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/Curso.java" target="_blank" rel="noopener noreferrer">Curso.java</a></li>
+      </ul>
+    </div>
+'''
+html = html.replace(needle, links_block + needle, 1)
+
+path.write_text(html, encoding="utf-8")
+print("Actualización mínima realizada.")
+print(f"Archivo: {path}")
+print(f"Tamaño final: {path.stat().st_size:,} bytes")
+print("Se mantuvo el diseño profesional y se agregaron únicamente enlaces de texto a la Actividad 1.")
