@@ -2215,8 +2215,28 @@
         <div class="grid md:grid-cols-2 gap-5 mt-7">
           <article class="rounded-2xl border border-cyan-400/35 bg-black/25 p-6">
             <div class="flex items-start gap-4"><div class="w-12 h-12 shrink-0 rounded-xl border border-cyan-400/50 flex items-center justify-center text-cyan-300 font-black text-lg">01</div><div><p class="text-cyan-300 text-xs font-mono">ENTREGA 01</p><h3 class="text-lg font-bold mt-1">Actividad 1: Fundamentos de estructuras de datos</h3><p class="text-sm text-slate-400 mt-3">Espacio para describir el primer trabajo de la materia, sus objetivos, el procedimiento realizado y los conceptos aplicados.</p></div></div>
-            <div class="mt-4 border-t border-slate-700 pt-4"><p class="text-xs text-slate-500 uppercase tracking-wider">Evidencia para publicar</p><p class="text-sm text-slate-300 mt-1">Documento, ejercicio resuelto, capturas o código correspondiente a la actividad 1.</p><p class="text-xs text-amber-300 mt-3">Cuando tengas el documento, pega el enlace de Word en el botón.</p>
-              <a class="btn neon-btn rounded-xl px-4 py-3 w-full mt-4 font-bold" href="PEGA_AQUI_EL_ENLACE_WORD_ACTIVIDAD_1" target="_blank" rel="noopener noreferrer">Abrir Word de la Actividad 1 ↗</a></div>
+            <div class="mt-4 border-t border-slate-700 pt-4">
+              <p class="text-xs text-slate-500 uppercase tracking-wider">Documento y archivos de la Actividad 1</p>
+              <p class="text-sm text-slate-300 mt-1">Consulta el documento principal y abre los archivos de código, el diagrama y las evidencias desde el repositorio de Estructura de Datos.</p>
+
+              <a class="btn neon-btn rounded-xl px-4 py-3 w-full mt-4 font-bold" href="https://docs.google.com/document/d/1EuNc_nIk1FoNU4hx1dMR1yPNEA9XXJg9mp6M6K3BjLI/edit?tab=t.0" target="_blank" rel="noopener noreferrer">📘 Abrir documento de la Actividad 1 ↗</a>
+
+              <div class="mt-5">
+                <p class="text-cyan-300 text-xs font-mono uppercase tracking-wider mb-3">Archivos del repositorio</p>
+                <div class="grid sm:grid-cols-2 gap-2">
+                  <a class="block rounded-lg border border-cyan-400/20 bg-cyan-400/[.035] p-3 text-sm text-slate-200 hover:border-cyan-400/60 hover:text-cyan-200 transition" href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/Curso.java" target="_blank" rel="noopener noreferrer">💻 Curso.java ↗</a>
+                  <a class="block rounded-lg border border-cyan-400/20 bg-cyan-400/[.035] p-3 text-sm text-slate-200 hover:border-cyan-400/60 hover:text-cyan-200 transition" href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/Estudiante.java" target="_blank" rel="noopener noreferrer">💻 Estudiante.java ↗</a>
+                  <a class="block rounded-lg border border-cyan-400/20 bg-cyan-400/[.035] p-3 text-sm text-slate-200 hover:border-cyan-400/60 hover:text-cyan-200 transition" href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/Main.java" target="_blank" rel="noopener noreferrer">💻 Main.java ↗</a>
+                  <a class="block rounded-lg border border-cyan-400/20 bg-cyan-400/[.035] p-3 text-sm text-slate-200 hover:border-cyan-400/60 hover:text-cyan-200 transition" href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/DIAGRAMA.png" target="_blank" rel="noopener noreferrer">🖼️ Diagrama ↗</a>
+                  <a class="block rounded-lg border border-cyan-400/20 bg-cyan-400/[.035] p-3 text-sm text-slate-200 hover:border-cyan-400/60 hover:text-cyan-200 transition" href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/EVIDENCIA%201.png" target="_blank" rel="noopener noreferrer">🖼️ Evidencia 1 ↗</a>
+                  <a class="block rounded-lg border border-cyan-400/20 bg-cyan-400/[.035] p-3 text-sm text-slate-200 hover:border-cyan-400/60 hover:text-cyan-200 transition" href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/EVIDENCIA%202.png" target="_blank" rel="noopener noreferrer">🖼️ Evidencia 2 ↗</a>
+                  <a class="block rounded-lg border border-cyan-400/20 bg-cyan-400/[.035] p-3 text-sm text-slate-200 hover:border-cyan-400/60 hover:text-cyan-200 transition" href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/EVIDENCIA%203.png" target="_blank" rel="noopener noreferrer">🖼️ Evidencia 3 ↗</a>
+                  <a class="block rounded-lg border border-cyan-400/20 bg-cyan-400/[.035] p-3 text-sm text-slate-200 hover:border-cyan-400/60 hover:text-cyan-200 transition" href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/EVIDENCIA%204.png" target="_blank" rel="noopener noreferrer">🖼️ Evidencia 4 ↗</a>
+                  <a class="block rounded-lg border border-cyan-400/20 bg-cyan-400/[.035] p-3 text-sm text-slate-200 hover:border-cyan-400/60 hover:text-cyan-200 transition" href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/EVIDENCIA%205.png" target="_blank" rel="noopener noreferrer">🖼️ Evidencia 5 ↗</a>
+                  <a class="block rounded-lg border border-cyan-400/20 bg-cyan-400/[.035] p-3 text-sm text-slate-200 hover:border-cyan-400/60 hover:text-cyan-200 transition" href="https://github.com/jeronimozapatav-art/ESTRUCTURA-DE-DATOS/blob/main/EVIDENCIA%206.png" target="_blank" rel="noopener noreferrer">🖼️ Evidencia 6 ↗</a>
+                </div>
+              </div>
+            </div>
           </article>
           <article class="rounded-2xl border border-blue-400/35 bg-black/25 p-6">
             <div class="flex items-start gap-4"><div class="w-12 h-12 shrink-0 rounded-xl border border-blue-400/50 flex items-center justify-center text-blue-300 font-black text-lg">02</div><div><p class="text-blue-300 text-xs font-mono">ENTREGA 02</p><h3 class="text-lg font-bold mt-1">Actividad 2: Estructuras lineales</h3><p class="text-sm text-slate-400 mt-3">Espacio para documentar el segundo trabajo de Estructura de Datos y explicar la solución desarrollada.</p></div></div>
